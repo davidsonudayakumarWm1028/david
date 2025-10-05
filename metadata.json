@@ -1,5 +1,5 @@
 {
-  "name": "Veo Product Prompt Generator",
+  "name": "David's Product Prompt Generator",
   "description": "An AI-powered application that generates creative video prompts for your products, specifically tailored for Google's Veo text-to-video model. Simply enter your product details to get unique and engaging video ideas.",
   "requestFramePermissions": []
 }
