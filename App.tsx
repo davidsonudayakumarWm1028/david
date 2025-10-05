@@ -81,6 +81,13 @@ const App: React.FC = () => {
       return newImages;
     });
   };
+  
+  const handleStepClick = (stepNumber: number) => {
+    // Only allow navigating to previous steps
+    if (stepNumber < step) {
+      setStep(stepNumber);
+    }
+  };
 
   const allUserImagesUploaded = userImages.every(img => img !== null) && userImages.length > 0;
 
@@ -89,7 +96,7 @@ const App: React.FC = () => {
       <div className="w-full max-w-4xl mx-auto">
         <Header />
         <main className="mt-8">
-          <StepIndicator currentStep={step} />
+          <StepIndicator currentStep={step} onStepClick={handleStepClick} />
 
           {isLoading && <LoadingSpinner />}
           {error && !isLoading && <div className="my-6"><ErrorMessage message={error} /></div>}
@@ -120,8 +127,11 @@ const App: React.FC = () => {
                       <ScriptPromptCard key={index} shot={shot} />
                     ))}
                   </div>
-                  <div className="text-center mt-8">
-                    <button onClick={() => setStep(3)} className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105">
+                  <div className="text-center mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <button onClick={() => setStep(1)} className="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                        Back
+                    </button>
+                    <button onClick={() => setStep(3)} className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105">
                       I've created the images, what's next?
                     </button>
                   </div>
@@ -141,11 +151,14 @@ const App: React.FC = () => {
                          </div>
                        ))}
                     </div>
-                    <div className="text-center mt-8">
+                    <div className="text-center mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <button onClick={() => setStep(2)} className="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                            Back
+                        </button>
                         <button 
                             onClick={handleVeoGeneration} 
                             disabled={!allUserImagesUploaded}
-                            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Generate Veo Prompts
                         </button>
@@ -162,8 +175,11 @@ const App: React.FC = () => {
                        <FinalPromptCard key={index} imageFile={userImages[index]} veoPrompt={prompt} shotNumber={index + 1} />
                      ))}
                    </div>
-                   <div className="text-center mt-10">
-                        <button onClick={handleReset} className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                   <div className="text-center mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <button onClick={() => setStep(3)} className="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                            Back
+                        </button>
+                        <button onClick={handleReset} className="w-full sm:w-auto border border-gray-600 hover:bg-gray-700 text-gray-300 font-bold py-3 px-8 rounded-lg transition-colors">
                             Start a New Project
                         </button>
                    </div>
